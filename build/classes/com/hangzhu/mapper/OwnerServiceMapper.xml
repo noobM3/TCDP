@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hangzhu.mapper.OwnerServiceMapper">
+	<resultMap id="ownerMap" type="Owner">
+		<result column="ono" property="ono" />
+		<result column="oname" property="oname" />
+		<result column="sex" property="sex" />
+		<result column="phone" property="phone" />
+		<result column="password" property="password" />
+		<result column="cer" property="cer" />
+	</resultMap>
+
+	<select id="checkOwner" resultMap="ownerMap">
+	   select * from owner where ono=#{ono} and password=#{password}
+	</select>
+
+	<insert id="addOwner" parameterType="Owner">
+		insert into Owner values(#{ono},#{oname},#{sex},#{phone},#{password},#{cer})
+	</insert>
+
+	<update id="updatePhone">
+		update Owner set phone=#{n_phone} where ono=#{ono}
+	</update>
+    
+    <update id="updatePw">
+        update Owner set password=#{n_pw} where ono=#{ono}
+    </update>
+    
+</mapper>
