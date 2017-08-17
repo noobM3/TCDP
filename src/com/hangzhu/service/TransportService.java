@@ -17,4 +17,8 @@ public interface TransportService
 	public boolean addTransport(Transport transport);
 
 	public void updateTransport(String trackingno);
+	
+	public List<Transport> getUndo(String ono);
+	
+	public List<Transport> getDone(String ono);
 }

@@ -22,5 +22,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <insert id="addCargo" parameterType="Cargo">
     insert into Cargo values(#{cno},#{ono},#{cname},#{weight},#{price},#{starting},#{ending},#{state},#{remark})
   </insert>
-    
+  
+  <delete id="deleteCargo">
+    delete from Cargo where ono=#{ono} and cno=#{cno}
+  </delete>
+   
+  <select id="getCargo1" parameterType="String" resultMap="cargoMap">
+    select * from Cargo where ono=#{ono} and state="待运输"
+  </select>  
+  
+  <select id="getCargo2" parameterType="String" resultMap="cargoMap">
+    select * from Cargo where ono=#{ono} and state="已接单"
+  </select>  
+  
+  <select id="getCargo3" parameterType="String" resultMap="cargoMap">
+    select * from Cargo where ono=#{ono} and state="运输中"
+  </select>  
+  
+  <select id="getCargo4" parameterType="String" resultMap="cargoMap">
+    select * from Cargo where ono=#{ono} and state="已完成"
+  </select>  
 </mapper>

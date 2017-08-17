@@ -10,7 +10,7 @@ public interface TransportServiceMapper
 	 * 
 	 * @param lno
 	 * @return List<>
-	 * @description:»ñÈ¡Ö¸¶¨ÎïÁ÷¹«Ë¾µÄËùÓĞ³ĞÔË¹ØÏµ
+	 * @description:ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½ï¿½Ğ³ï¿½ï¿½Ë¹ï¿½Ïµ
 	 */
 	public List<Object> getTransports(String lno);
 	
@@ -18,7 +18,7 @@ public interface TransportServiceMapper
 	 * 
 	 * @param ono
 	 * @return
-	 * @description:»ñÈ¡»õÖ÷µÄËùÓĞ¶©µ¥
+	 * @description:ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½
 	 */
 	public List<Transport> getTransport(String ono);
 	
@@ -26,14 +26,14 @@ public interface TransportServiceMapper
 	 * 
 	 * @param trackingno
 	 * @return Transport
-	 * @description:Æ¥Åä²éÕÒÊı¾İ¿âÖĞ¶ÔÓ¦ÎïÁ÷µ¥ºÅµÄ³ĞÔË¹ØÏµ²¢·µ»Ø
+	 * @description:Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ğ¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅµÄ³ï¿½ï¿½Ë¹ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	public Transport checkTransport(String trackingno);
 	 
 	/**
 	 * 
 	 * @param trackingno
-	 * @description:É¾³ıÊı¾İ¿âÖĞ¶ÔÓ¦ÎïÁ÷µ¥ºÅµÄ³ĞÔË¹ØÏµ
+	 * @description:É¾ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ğ¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅµÄ³ï¿½ï¿½Ë¹ï¿½Ïµ
 	 */
 	public void deleteTransport(String trackingno);
 	
@@ -41,16 +41,21 @@ public interface TransportServiceMapper
 	 * 
 	 * @param transport
 	 * @return Boolean
-	 * @description:ÏòÊı¾İ¿âÖĞÌí¼ÓĞÂµÄ³ĞÔË¹ØÏµ
+	 * @description:ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ³ï¿½ï¿½Ë¹ï¿½Ïµ
 	 */
 	public boolean addTransport(Transport transport);
 	
 	/**
 	 * 
 	 * @param trackingno
-	 * @description:¸üĞÂÊı¾İ¿âÖĞ³ĞÔË¹ØÏµµÄĞÅÏ¢
+	 * @description:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ğ³ï¿½ï¿½Ë¹ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ï¢
 	 */
 	public void updateTransport(String trackingno);
 	//TODO
+	
+	public List<Transport> getUndo(String ono);
+	
+	public List<Transport> getDone(String ono);
+	
 	
 }

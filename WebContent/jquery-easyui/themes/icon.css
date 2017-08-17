@@ -94,3 +94,9 @@
 .icon-large-chart{
 	background:url('icons/large_chart.png') no-repeat center center;
 }
+.icon-backup{
+    background:url('icons/backup.png') no-repeat center center;
+}
+.icon-reduction{
+    background:url('icons/reduction.png') no-repeat center center;
+}

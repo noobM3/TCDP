@@ -32,13 +32,104 @@ public class CargoController
 		return map;
 	}
 	
+	/**
+	 * 
+	 * @param ono
+	 * @return
+	 * @description:获取待运输状态的货物
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("getcargo1.do")
+	@ResponseBody
+	public Map getCargo1(String ono)
+	{	
+		List<Cargo> cargos = cs.getCargo1(ono);
+		Map map = new HashMap<>();
+		map.put("rows", cargos);
+		map.put("total", cargos.size());
+		return map;
+	}
+	
+	/**
+	 * 
+	 * @param ono
+	 * @return
+	 * @description:获取已接单状态的货物
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("getcargo2.do")
+	@ResponseBody
+	public Map getCargo2(String ono)
+	{	
+		List<Cargo> cargos = cs.getCargo2(ono);
+		Map map = new HashMap<>();
+		map.put("rows", cargos);
+		map.put("total", cargos.size());
+		return map;
+	}
+	
+	/**
+	 * 
+	 * @param ono
+	 * @return
+	 * @description:获取运输中状态的货物
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("getcargo3.do")
+	@ResponseBody
+	public Map getCargo3(String ono)
+	{	
+		List<Cargo> cargos = cs.getCargo3(ono);
+		Map map = new HashMap<>();
+		map.put("rows", cargos);
+		map.put("total", cargos.size());
+		return map;
+	}
+	
+	/**
+	 * 
+	 * @param ono
+	 * @return
+	 * @description:获取已完成状态的货物
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("getcargo4.do")
+	@ResponseBody
+	public Map getCargo4(String ono)
+	{	
+		List<Cargo> cargos = cs.getCargo4(ono);
+		Map map = new HashMap<>();
+		map.put("rows", cargos);
+		map.put("total", cargos.size());
+		return map;
+	}
+	
 	@RequestMapping("addcargo.do")
 	@ResponseBody
 	public String addCargo(Cargo cargo)
 	{
-		System.out.println("-----------" + cargo);
 		cs.addCargo(cargo);
-		System.out.println("!!!!!!!!!!!!");
 		return "{\"success\":true}";
 	}
+	
+	@RequestMapping("removecargo.do")
+	@ResponseBody
+	public String removeCargo(String ono ,int cno)
+	{
+		cs.deleteCargo(ono, cno);
+		return "{\"success\":true}";
+	}
+	
+	@RequestMapping("editcargo.do")
+	@ResponseBody
+	public String editCargo(Cargo cargo)
+	{
+		System.out.println(cargo);
+		cs.deleteCargo(cargo.getOno(), cargo.getCno());
+		cs.addCargo(cargo);
+		return "{\"success\":true}";
+	}
+	
+	
+	
 }

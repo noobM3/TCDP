@@ -41,4 +41,11 @@ public class OwnerServiceImpl implements OwnerService
 		osm.updatePw(ono, n_pw);
 	}
 
+	@Override
+	public boolean getOwner(String ono, String oname)
+	{
+		if(osm.getOwner(ono, oname) == null) return false;
+		return true;
+	}
+
 }

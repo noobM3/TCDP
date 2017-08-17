@@ -50,4 +50,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     delete from transport where trackingno=#{trackingno}
   </delete>
     
+  <select id="getUndo" parameterType="String" resultMap="transportMap">
+    select * from transport where ono=#{ono} and end_time is null;
+  </select>  
+  
+  <select id="getDone" parameterType="String" resultMap="transportMap">
+    select * from transport where ono=#{ono} and end_time is not null;
+  </select>  
 </mapper>

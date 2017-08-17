@@ -14,4 +14,5 @@ public interface OwnerServiceMapper
 	
 	public void updatePw(@Param("ono")String ono,@Param("n_pw")String n_pw);
 	
+	public Owner getOwner(@Param("ono")String ono,@Param("oname")String oname);
 }

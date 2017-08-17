@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>已完成订单</title>
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/xyy.css">
+    <script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/easyloader.js"></script>
+
+</head>
+<script type="text/javascript">
+
+var user=
+    $.get("owner/getsession.do",function getuser(data)
+    {
+        user=data;
+    });
+
+function updatedg()
+{
+    $("#dg").datagrid({
+                url : "transport/getdone.do?ono="+user.ono
+            });
+    $(function () {
+        $.messager.defaults = { ok: "是", cancel: "否" };
+    });
+}
+
+function removeTransport() {
+    var row = $('#dg').datagrid('getSelected');
+    
+    if (row) {
+        $.messager.confirm('确认',
+                '确定要删除该订单?删除后无法恢复！',
+                function(r) {
+                    if (r) {
+                        $.post('transport/delete.do', 
+                        {trackingno : row.trackingno}, 
+                        function(result) {
+                            if (result.success) 
+                            {
+                                $('#dg').datagrid('reload'); // reload the user data
+                            } 
+                            else {
+                                $.messager.show({ // show error message
+                                    title : 'Error',
+                                    msg : result.msg
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+    }
+}
+
+
+</script>
+<body onload="updatedg()">
+    <table id="dg" title="已完成订单" iconCls="icon-dingdan"
+        class="easyui-datagrid" style="width: 100%; height: 600px;"
+        data-options="idField:'id',rownumbers:false,fitColumns:true,pagination:true,singleSelect:true,collapsible:true,toolbar:'#toolbar',method:'get',checkOnSelect:'true',selectOnCheck:'true'">
+        <!---获取数据--->
+        <thead>
+            <tr>
+                <th field="ck" checkbox="true"></th>
+                <th data-options="field:'trackingno',width:80">物流单号</th>
+                <th data-options="field:'lname',width:100">物流公司</th>
+                <th data-options="field:'cname',width:100">货物</th>
+                <th data-options="field:'starting',width:100">出发地</th>
+                <th data-options="field:'destination',width:100">目的地</th>
+                <th data-options="field:'start_time',width:100">开始时间</th>
+                <th data-options="field:'end_time',width:100">结束时间</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+<!--                                <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新 增</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编 辑</a> -->
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeTransport()">移 除</a>
+
+                                <a href="#" class="easyui-linkbutton" plain="true">
+                                    <span>丨选择模式: </span>
+                                    <select onchange="$('#dg').datagrid({singleSelect:(this.value==1)})">
+                                        <option value="1">单选</option>
+                                        <option value="0">全选</option>
+                                    </select>
+                                </a>
+                                <a href="#" class="easyui-linkbutton" plain="true">
+                                    <span>丨数据操作: </span>
+                                </a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-backup" plain="true" onclick="backupTransport()">备 份</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-reduction" plain="true" onclick="reduceTransport()">还 原</a>
+                                
+                                <!-- <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addTab('新增用户','add.html')">新增</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="addTab('编辑用户','edit.html')">编辑</a> -->
+     </div>    
+</body>
+</html>

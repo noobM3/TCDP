@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Owner
 {
-	private String	ono;		// »õÖ÷±àºÅ
-	private String	oname;		// »õÖ÷ÐÕÃû
-	private String	sex;		// ÐÔ±ð
-	private String	phone;		// µç»°
-	private String	password;	// ÃÜÂë
-	private int		cer;		// ÈÏÖ¤×´Ì¬--0£ºÎ´ÈÏÖ¤ 1£ºÒÑÈÏÖ¤
+	private String	ono;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String	oname;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String	sex;		// ï¿½Ô±ï¿½
+	private String	phone;		// ï¿½ç»°
+	private String	password;	// ï¿½ï¿½ï¿½ï¿½
+	private int		cer;		// ï¿½ï¿½Ö¤×´Ì¬--0ï¿½ï¿½Î´ï¿½ï¿½Ö¤ 1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤
 	
 	public Owner()
 	{

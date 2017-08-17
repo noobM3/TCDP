@@ -53,4 +53,16 @@ public class TransportServiceImpl implements TransportService
 		return tsm.getTransport(ono);
 	}
 
+	@Override
+	public List<Transport> getUndo(String ono)
+	{
+		return tsm.getUndo(ono);
+	}
+
+	@Override
+	public List<Transport> getDone(String ono)
+	{
+		return tsm.getDone(ono);
+	}
+
 }

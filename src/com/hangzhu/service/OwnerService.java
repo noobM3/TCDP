@@ -7,7 +7,7 @@ public interface OwnerService
 	/**
 	 * 
 	 * @param owner
-	 * @description:ÏòÊı¾İ¿âÖĞÌí¼ÓĞÂ»õÖ÷
+	 * @description:æ·»åŠ è´§ä¸»
 	 */
 	public boolean addOwner(Owner owner);
 	
@@ -15,7 +15,7 @@ public interface OwnerService
 	 * 
 	 * @param ono
 	 * @param n_phone
-	 * @description:ĞŞ¸Ä»õÖ÷ÁªÏµµç»°
+	 * @description:ä¿®æ”¹ç”µè¯
 	 */
 	public void updatePone(String ono,String n_phone);
 	
@@ -23,7 +23,7 @@ public interface OwnerService
 	 * 
 	 * @param ono
 	 * @param n_pw
-	 * @description:ĞŞ¸ÄÓÃ»§ÃÜÂë
+	 * @description:ä¿®æ”¹å¯†ç 
 	 */
 	public void updatePw(String ono,String n_pw);
 	
@@ -32,7 +32,16 @@ public interface OwnerService
 	 * @param ono
 	 * @param password
 	 * @return
-	 * @description:Æ¥ÅäÊı¾İ¿âÖĞÕËºÅ
+	 * @description:ç™»å½•æ£€æµ‹
 	 */
 	public Owner checkOwner(String ono,String password);
+	
+	/**
+	 * 
+	 * @param ono
+	 * @param oname
+	 * @return
+	 * @description:æ£€æµ‹æ˜¯å¦å­˜åœ¨è¯¥è´§ä¸»
+	 */
+	public boolean getOwner(String ono,String oname);
 }

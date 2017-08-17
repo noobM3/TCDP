@@ -35,6 +35,23 @@ public class OwnerController
 		return (Owner)this.session.getAttribute("owner");
 	}
 	
+	
+	/**
+	 * 
+	 * @param owner
+	 * @return
+	 * @description:检测是否有符合条件的货主
+	 */
+	@RequestMapping("getowner.do")
+	@ResponseBody
+	public String getOwner(String ono,String oname)
+	{
+//		System.out.println(ono);
+//		System.out.println(oname);
+		if(os.getOwner(ono, oname)) return "{\"success\":true}";
+		return "{\"success\":false}";
+	}
+	
 	@RequestMapping(value="register.do",method = RequestMethod.POST)
 	public String register(Owner owner,Model model)
 	{
@@ -76,12 +93,10 @@ public class OwnerController
 	public String changPw(HttpServletRequest request)
 	{
 		String npw = request.getParameter("npw1");
-		System.out.println("npw------------" + npw);
 		HttpSession session = request.getSession();
 		Owner user = (Owner) session.getAttribute("owner");
-		System.out.println("---------" + user);
 		os.updatePw(user.getOno(), npw);
-		return "Success��";
+		return "Success!";
 	}
 	
     @RequestMapping("/logoff.do")

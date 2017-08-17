@@ -52,6 +52,17 @@
 		        $.messager.defaults = { ok: "是", cancel: "否" };
 		    });
 			
+		    function role()
+		    {
+		        var state=
+		            $.get("owner/getowner.do?ono="+user.ono+"&oname="+user.oname,function getuser(data)
+		            {
+		            	state=data;
+		            });
+		       if(state.success) document.write("货主");
+		    }
+		    
+		    
 			function updatedg()
 			{
 		        $("#dg").datagrid({
@@ -118,6 +129,16 @@
 							});
 				}
 			}
+
+			function order1()
+			{
+			    var map1=
+			        $.get("cargo/getcargo1.do?ono="+user.ono,function getuser(data)
+			        {
+			            map1=data;
+			        });
+			    document.write(map1["total"]);
+			}
 		</script>
 </head>
 <body class="easyui-layout" style="margin:0 1px;background-color:#f5f5f5 !important;" onload="updatedg()">  
@@ -142,43 +163,37 @@
     <div data-options="region:'south',split:true" style="height:40px;text-align:center;line-height:30px;background:#19aa8d;color:#f5f5f5;">版权所有：Hashzh 苏ICP 99999999</div>   
     <div data-options="region:'west',title:'平台管理主菜单',split:true" style="width:200px;">
 	    <div id="menu" class="easyui-accordion" fit="true" border="false" style="background-color:#F0F8FF;">
-            <div title="系统设置" data-options="iconCls:'icon-shezhi',selected:true" style="overflow:auto;padding:10px;background-color:#F0F8FF">
+            <div title="订单管理" data-options="iconCls:'icon-shezhi',selected:true" style="overflow:auto;padding:10px;background-color:#F0F8FF">
                 <ul id="tt" class="easyui-tree" data-options="animate:true,lines:true">  
-                    <li>  
-                        <span>订单管理</span>  
-                        <ul>                             
                             <li>  
-								<span><a href="#" onclick="addTab('所有订单','mytransports.html')">所有订单</a></span>  
-                            </li>  
+                                <span><a href="#" onclick="addTab('异常订单','index.html')">异常订单</a></span>  
+                            </li>    
                             <li>  
-								<span><a href="#" onclick="addTab('未完成订单','index.html')">未完成订单</a></span>  
-                            </li>  
+								<span><a href="#" onclick="addTab('未完成订单','undonetransport.html')">未完成订单</a></span>  
+                            </li>
                             <li>  
-								<span><a href="#" onclick="addTab('未完成订单','index.html')">已完成订单</a></span>  
+								<span><a href="#" onclick="addTab('已完成订单','completedtransport.html')">已完成订单</a></span>  
                             </li>                                                           
-                        </ul>  
-                    </li>  
-                    <li>  
-                        <span>货物管理</span>
-                        <ul>                             
-                            <li>  
-								<span><a href="#" onclick="addTab('添加货物','index.html')">添加货物</a></span>  
-                            </li>  
-                            <li>  
-								<span><a href="#" onclick="addTab('查看货物','mycargos.html')">查看货物</a></span>  
-                            </li>  
-                            <li>  
-								<span><a href="#" onclick="addTab('待承运货物','index.html')">待承运货物</a></span>  
-                            </li>                                                           
-                            <li>  
-                                <span><a href="#" onclick="addTab('已承运货物','index.html')">已承运货物</a></span>  
-                            </li>  
-                        </ul> 						
-                    </li>  
                 </ul>
             </div>
-            <div title="景区服务商管理" data-options="iconCls:'icon-guanli'" style="padding:10px;background-color:#F0F8FF">
-                content2
+            <div title="货物管理" data-options="iconCls:'icon-guanli'" style="padding:10px;background-color:#F0F8FF">
+                <ul id="tt2" class="easyui-tree" data-options="animate:true,lines:true">  
+                            <li>  
+                                <span><a href="#" onclick="addTab('我的货物','mycargos.html')">我的货物</a></span>  
+                            </li>  
+                            <li>  
+                                <span><a href="#" onclick="addTab('货物--待承运','getcargo1.html')">货物--待承运</a></span>  
+                            </li>   
+                            <li>  
+                                <span><a href="#" onclick="addTab('货物--已接单','getcargo2.html')">货物--已接单</a></span>  
+                            </li>                                                           
+                            <li>  
+                                <span><a href="#" onclick="addTab('货物--运输中','getcargo3.html')">货物--运输中</a></span>  
+                            </li>
+                            <li>  
+                                <span><a href="#" onclick="addTab('货物--已完成','getcargo4.html')">货物--已完成</a></span>  
+                            </li>    
+                </ul>
             </div>
             <div title="票务信息设置" data-options="iconCls:'icon-shezhi'" style="overflow:auto;padding:10px;background-color:#F0F8FF">
                 content3
@@ -202,6 +217,9 @@
                     </li>                                                           
                 </ul>  
             </div>
+<!--             <div title="系统设置" data-options="iconCls:'icon-guanli'" style="overflow:auto;padding:10px;background-color:#F0F8FF">
+                 
+            </div> -->
         </div>
 	
 	</div>  
@@ -212,7 +230,7 @@
 					<div data-options="region:'north',border:false" style="height:130px;border-bottom:1px #a7b1c2 dashed;padding:5px;">
 						<div class="easyui-layout" data-options="fit:true">
 							<div data-options="region:'west',border:false" style="width:350px;height:150px;border-right:1px #a7b1c2 dashed;padding:5px;color:#2f4050;">
-								<h1 style="margin:0 0 10px 0;">欢迎使用车货配！</h1>
+								<h1 style="margin:0 0 10px 0;">欢迎使用车货配，<span style="color:Red"><script>role()</script></span>！</h1>
 								<ul style="list-style-type:none;padding:0;">
 									<li style="margin-bottom:10px;">
 										<a href="#" style="text-decoration:none;font-size:16px;color:#2f4050;"><i class="xyy-hello" style="display:block;width: 16px;height:16px;float:left;margin:2px 3px;"></i>您好,<span class="tag" style="color:red;"><script>document.write(user.oname)</script></span>!</a>
@@ -223,16 +241,16 @@
 							</div>
 							<div data-options="region:'center',border:false" style="padding-left:30px;">
 								<div class="jiankong" data-options="region:'center',border:false">
-									<div class="juxing"><a href="#">新增订单 <span>888</span> 个</a></div>
+									<div class="juxing"><a href="#">未完订单 <span><script>order1()</script></span> 个</a></div>
 								</div>
 								<div class="jiankong" data-options="region:'center',border:false">
-									<div class="juxing"><a href="#">异常订单 <span>888</span> 个</a></div>
+									<div class="juxing"><a href="#">完成订单 <span><script>order2()</script></span> 个</a></div>
 								</div>
 								<div class="jiankong" data-options="region:'center',border:false">
-									<div class="juxing"><a href="#">新增用户 <span>888</span> 个</a></div>
+									<div class="juxing"><a href="#">货主 <span><script>owner()</script></span> 个</a></div>
 								</div>
 								<div class="jiankong" data-options="region:'center',border:false">
-									<div class="juxing"><a href="#">新增服务商 <span>888</span> 个</a></div>
+									<div class="juxing"><a href="#">物流公司 <span><script>logistics()</script></span> 个</a></div>
 								</div>
 							</div>
 						</div>
@@ -257,9 +275,10 @@
 							</thead>
 							</table>
 							<div id="toolbar">
-								<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新 增</a>
-								<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编 辑</a>
+<!-- 								<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新 增</a>
+								<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编 辑</a> -->
 								<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeUser()">移 除</a>
+
 								<a href="#" class="easyui-linkbutton" plain="true">
 									<span>丨选择模式: </span>
 									<select onchange="$('#dg').datagrid({singleSelect:(this.value==1)})">
@@ -267,8 +286,14 @@
 										<option value="0">全选</option>
 									</select>
 								</a>
-								<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addTab('新增用户','add.html')">新增</a>
-								<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="addTab('编辑用户','edit.html')">编辑</a>
+								<a href="#" class="easyui-linkbutton" plain="true">
+								    <span>丨数据操作: </span>
+								</a>
+								<a href="#" class="easyui-linkbutton" iconCls="icon-backup" plain="true" onclick="backupTransport()">备 份</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-reduction" plain="true" onclick="reduceTransport()">还 原</a>
+								
+								<!-- <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addTab('新增用户','add.html')">新增</a>
+								<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="addTab('编辑用户','edit.html')">编辑</a> -->
 							</div>
 							<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 								<div class="ftitle">用户 信息</div>
@@ -307,6 +332,11 @@
 	    </div> -->
 	</div>  
 <script type="text/javascript">
+
+function backupTransport()
+{
+    
+}
 
 function addTab(title, url){
 	if ($('#tb').tabs('exists', title)){

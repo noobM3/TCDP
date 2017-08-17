@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>1</title>
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/xyy.css">
+    <script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/easyloader.js"></script>
+
+</head>
+<script type="text/javascript">
+
+var user=
+    $.get("owner/getsession.do",function getuser(data)
+    {
+        user=data;
+    });
+
+function updatedg()
+{
+    
+    $("#dg").datagrid({
+                url : "cargo/getcargo2.do?ono="+user.ono
+            });
+}
+</script>
+<body onload="updatedg()">
+    <table id="dg" title="货物--已接单" iconCls="icon-dingdan"
+        class="easyui-datagrid" style="width: 100%; height: 600px;"
+        data-options="idField:'id',rownumbers:false,fitColumns:true,pagination:true,singleSelect:true,collapsible:true,toolbar:'#toolbar',method:'get',checkOnSelect:'true',selectOnCheck:'true'">
+        <!---获取数据--->
+		<thead>
+			<tr>
+				<th data-options="field:'cno',width:40">编号</th>
+				<th data-options="field:'cname',width:40">名称</th>
+				<th data-options="field:'weight',width:30">重量</th>
+				<th data-options="field:'price',width:30">报价</th>
+				<th data-options="field:'starting',width:50">出发地</th>
+				<th data-options="field:'ending',width:50">目的地</th>
+				<th data-options="field:'state',width:30">状态</th>
+				<th data-options="field:'remark',width:150">备注</th>
+			</tr>
+		</thead>
+	</table>
+</body>
+</html>

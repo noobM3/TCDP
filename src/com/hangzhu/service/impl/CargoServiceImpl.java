@@ -28,4 +28,34 @@ public class CargoServiceImpl implements CargoService
 		csm.addCargo(cargo);
 	}
 
+	@Override
+	public void deleteCargo(String ono, int cno)
+	{
+		csm.deleteCargo(ono, cno);
+	}
+
+	@Override
+	public List<Cargo> getCargo1(String ono)
+	{
+		return csm.getCargo1(ono);
+	}
+
+	@Override
+	public List<Cargo> getCargo2(String ono)
+	{
+		return csm.getCargo2(ono);
+	}
+
+	@Override
+	public List<Cargo> getCargo3(String ono)
+	{
+		return csm.getCargo3(ono);
+	}
+
+	@Override
+	public List<Cargo> getCargo4(String ono)
+	{
+		return csm.getCargo4(ono);
+	}
+
 }

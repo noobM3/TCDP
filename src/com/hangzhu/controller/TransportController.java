@@ -21,13 +21,20 @@ public class TransportController
 	@Resource
 	private TransportService ts;
 	
+	/**
+	 * 
+	 * @param trackingno
+	 * @param model
+	 * @return
+	 * @description:æŒ‰ç‰©æµå•å·æŸ¥è¯¢è¯¦æƒ…
+	 */
 	@RequestMapping("search.do")
 	public String search(String trackingno,Model model)
 	{
 		Transport result = ts.checkTransport(trackingno);
-		if(result == null) return "transportsearchfail";//Ìø×ªµ½     /fail.jsp
+		if(result == null) return "transportsearchfail";
 		model.addAttribute("transport", result);
-		return "transportinfo";//Ìø×ªµ½      /transportinfo.jsp
+		return "transportinfo";
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -36,6 +43,30 @@ public class TransportController
 	public Map getMyTransports(String ono)
 	{	
 		List<Transport> transports = ts.getTransport(ono);
+		Map map = new HashMap<>();
+		map.put("rows", transports);
+		map.put("total", transports.size());
+		return map;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("getundo.do")
+	@ResponseBody
+	public Map getUndo(String ono)
+	{	
+		List<Transport> transports = ts.getUndo(ono);
+		Map map = new HashMap<>();
+		map.put("rows", transports);
+		map.put("total", transports.size());
+		return map;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("getdone.do")
+	@ResponseBody
+	public Map getDone(String ono)
+	{	
+		List<Transport> transports = ts.getDone(ono);
 		Map map = new HashMap<>();
 		map.put("rows", transports);
 		map.put("total", transports.size());

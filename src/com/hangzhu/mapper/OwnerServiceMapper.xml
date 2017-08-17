@@ -28,4 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update Owner set password=#{n_pw} where ono=#{ono}
     </update>
     
+    <select id="getOwner" resultMap="ownerMap">
+       select * from owner where ono=#{ono} and oname=#{oname}
+    </select>
 </mapper>

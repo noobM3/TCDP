@@ -2,15 +2,15 @@ package com.hangzhu.po;
 
 public class Cargo
 {
-	private String	ono;		// »õÖ÷±àºÅ
-	private int		cno;		// »õÎï±àºÅ£º1,2,3,4.¡£¡£¡£
-	private String	cname;		// »õÎïÃû
-	private double	weight;		// ÖØÁ¿£¬µ¥Î»£º¶Ö
-	private String	price;		// ÔËµ¥±¨¼Û
-	private String	starting;	// ³ö·¢µØ
-	private String	ending;		// Ä¿µÄµØ
-	private String	state;		// ÔËÊä×´Ì¬£º´ıÔËÊä¡¢ÔËÊäÖĞ¡¢ÔËÊäÍê³É
-	private String	remark;		// ±¸×¢
+	private String	ono;		// è´§ä¸»ç¼–å·
+	private int		cno;		// è´§ç‰©ç¼–å·1,2,3,4ã€‚ã€‚ã€‚
+	private String	cname;		// è´§ç‰©å
+	private double	weight;		// é‡é‡
+	private String	price;		// ä»·æ ¼
+	private String	starting;	// å‡ºå‘åœ°
+	private String	ending;		// ç›®çš„åœ°
+	private String	state;		// çŠ¶æ€ï¼šå¾…è¿è¾“ã€å·²æ¥å•ã€è¿è¾“ä¸­ã€å®Œæˆ
+	private String	remark;		// å¤‡æ³¨
 	
 	public Cargo()
 	{

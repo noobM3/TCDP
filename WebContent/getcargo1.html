@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>1</title>
+
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/xyy.css">
+    <script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/easyloader.js"></script>
+
+</head>
+<script type="text/javascript">
+
+var user=
+    $.get("owner/getsession.do",function getuser(data)
+    {
+        user=data;
+    });
+    
+    
+function myono()
+{
+    document.getElementById("ono").value=user.ono;
+}
+
+function mystate()
+{
+    document.getElementById("state").value="待运输";
+}
+
+function updatedg()
+{
+    $(function () {
+        $.messager.defaults = { ok: "是", cancel: "否" };
+    });
+    
+    document.getElementById("ono").value=user.ono;
+	
+    $("#dg").datagrid({
+                url : "cargo/getcargo1.do?ono="+user.ono
+            });
+}
+
+
+function newCargo() 
+{
+    $('#dlg').dialog('open').dialog('setTitle', '添加货物');
+    $('#fm').form('clear');
+    url = 'cargo/addcargo.do'; 
+}
+function editCargo() {
+var row = $('#dg').datagrid('getSelected');
+if (row) {
+    $('#dlg').dialog('open').dialog('setTitle', '编辑货物');
+    $('#fm').form('load', row);
+    url = 'cargo/editcargo.do';
+}
+}
+function saveCargo() {
+$('#fm').form('submit', {
+    url : url,
+    onSubmit : function() {
+        return $(this).form('validate');
+    },
+    success : function(result) {
+        var result = eval('(' + result + ')');
+        if (result.success) {
+            $('#dlg').dialog('close'); // close the dialog
+            $('#dg').datagrid('reload'); // reload the user data
+        } else {
+            $.messager.show({
+                title : 'Error',
+                msg : result.msg
+            });
+        }
+    }
+});
+}
+
+function removeCargo() 
+{
+var row = $('#dg').datagrid('getSelected');
+if (row) {
+    $.messager.confirm('确认',
+            '确定要删除该货物?该操作无法撤销',
+            function(r) {
+                if (r) {
+                    $.post('cargo/removecargo.do', {
+                        ono : user.ono,
+                        cno : row.cno
+                    }, function(result) {
+                        if (result.success) {
+                            $('#dg').datagrid('reload'); // reload the user data
+                        } else {
+                            $.messager.show({ // show error message
+                                title : 'Error',
+                                msg : result.msg
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+}
+}
+</script>
+<body onload="updatedg()">
+    <table id="dg" title="货物--待承运" iconCls="icon-dingdan"
+        class="easyui-datagrid" style="width: 100%; height: 600px;"
+        data-options="idField:'id',rownumbers:false,fitColumns:true,pagination:true,singleSelect:true,collapsible:true,toolbar:'#toolbar',method:'get',checkOnSelect:'true',selectOnCheck:'true'">
+        <!---获取数据--->
+		<thead>
+			<tr>
+			    <th field="ck" checkbox="true"></th>
+				<th data-options="field:'cno',width:40">编号</th>
+				<th data-options="field:'cname',width:40">名称</th>
+				<th data-options="field:'weight',width:30">重量</th>
+				<th data-options="field:'price',width:30">报价</th>
+				<th data-options="field:'starting',width:50">出发地</th>
+				<th data-options="field:'ending',width:50">目的地</th>
+				<th data-options="field:'state',width:30">状态</th>
+				<th data-options="field:'remark',width:150">备注</th>
+			</tr>
+		</thead>
+	</table>
+	                           <div id="toolbar">
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newCargo()">新 增</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editCargo()">编 辑</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeCargo()">移 除</a>
+                            </div>
+                            <div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+                                <div class="ftitle">货物信息</div>
+                                <form id="fm" method="post" novalidate>
+                                    
+                                    <div class="fitem">
+                                        <label>货 主:</label>
+                                        <input id="ono" name="ono" onfocus="myono()" onblur="myono()" class="easyui-validatebox" required="true" >
+                                    </div>
+                                    <div class="fitem">
+                                        <label>状 态:</label>
+                                        <input id="state" name="state" value="运输中" onblur="mystate()" onfocus="mystate()" class="easyui-validatebox" required="true" >
+                                    </div>
+                                    <div class="fitem">
+                                        <label>编    号:</label>
+                                        <input name="cno" data-options="validType:'digits'" class="easyui-validatebox" required="true">
+                                    </div>
+                                    
+                                    <div class="fitem">
+                                        <label>名    称:</label>
+                                        <input name="cname" class="easyui-validatebox" required="true">
+                                    </div>
+                                    <div class="fitem">
+                                        <label>重    量:</label>
+                                        <input name="weight" class="easyui-validatebox" required="true">
+                                    </div>
+                                    <div class="fitem">
+                                        <label>价    格:</label>
+                                        <input name="price" class="easyui-validatebox" required="true">
+                                    </div>
+                                    <div class="fitem">
+                                        <label>起    点:</label>
+                                        <input name="starting" class="easyui-validatebox" required="true">
+                                    </div>
+                                    <div class="fitem">
+                                        <label>终    点:</label>
+                                        <input name="ending" class="easyui-validatebox" required="true">
+                                    </div>
+                                    <div class="fitem">
+                                        <label>备    注:</label>
+                                        <input class="easyui-textbox" type="text" name="remark"
+                                                style="height:80px;padding:10px"  
+                                                data-options="multiline:true,prompt:'货物备注'">
+                                    </div> 
+                                </form>
+                            </div>
+                            <div id="dlg-buttons">
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveCargo()">保存</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">关闭</a>
+                            </div>    
+</body>
+</html>
