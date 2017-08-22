@@ -39,4 +39,10 @@ public class LogisticsServiceImpl implements LogisticsService
 		updateLogisticsAddress(lno, n_address);
 	}
 
+	@Override
+	public int getCount()
+	{
+		return lsm.getCount();
+	}
+
 }

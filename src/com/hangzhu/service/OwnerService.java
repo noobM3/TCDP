@@ -44,4 +44,11 @@ public interface OwnerService
 	 * @description:检测是否存在该货主
 	 */
 	public boolean getOwner(String ono,String oname);
+	
+	/**
+	 * 
+	 * @return
+	 * @description:获取货主数
+	 */
+	public int getCount();
 }

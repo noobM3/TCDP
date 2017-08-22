@@ -21,4 +21,6 @@ public interface TransportService
 	public List<Transport> getUndo(String ono);
 	
 	public List<Transport> getDone(String ono);
+	
+	public void backup(String ono);
 }

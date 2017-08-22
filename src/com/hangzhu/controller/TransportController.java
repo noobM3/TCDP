@@ -80,4 +80,10 @@ public class TransportController
 		ts.deleteTransport(trackingno);
 		return "{\"success\":true}";
 	}
+	
+	@RequestMapping("backup.do")
+	public void backup(String ono)
+	{
+		ts.backup(ono);
+	}
 }

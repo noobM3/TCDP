@@ -31,4 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getOwner" resultMap="ownerMap">
        select * from owner where ono=#{ono} and oname=#{oname}
     </select>
+    
+    <select id="getCount" resultType="int">
+       select count(*) from owner
+    </select>
 </mapper>

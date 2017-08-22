@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hangzhu.mapper.LogisticsServiceMapper;
 import com.hangzhu.po.Logistics;
@@ -24,4 +25,17 @@ public class LogisticsController
 		model.addAttribute("logistics", logistics);
 		return "logisticsdisplay";
 	}
+	
+    /**
+     * 
+     * @return
+     * @description:获取当前平台物流公司总数
+     */
+    @RequestMapping("count.do")
+    @ResponseBody
+    public String getCount()
+    {
+    	int count = ls.getCount();
+    	return "{\"count\":\"" + count + "\"}";
+    }
 }

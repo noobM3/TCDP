@@ -57,5 +57,5 @@ public interface TransportServiceMapper
 	
 	public List<Transport> getDone(String ono);
 	
-	
+	public void backupTransport(String ono);
 }

@@ -65,4 +65,10 @@ public class TransportServiceImpl implements TransportService
 		return tsm.getDone(ono);
 	}
 
+	@Override
+	public void backup(String ono)
+	{
+		tsm.backupTransport(ono);
+	}
+
 }

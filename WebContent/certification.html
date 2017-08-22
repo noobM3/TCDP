@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>上传手持身份证照片</title>
+
+<!-- 引入JQuery -->
+<script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+<!-- 引入EasyUI -->
+<script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+<!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+<script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<!-- 引入EasyUI的样式文件-->
+<link rel="stylesheet" href="jquery-easyui/themes/default/easyui.css" type="text/css"/>
+<!-- 引入EasyUI的图标样式文件-->
+<link rel="stylesheet" href="jquery-easyui/themes/icon.css" type="text/css"/>
+
+<script type="text/javascript">
+    function upload()
+    {
+    	$('#upload').form({
+    	url:'file/upload.do',    
+    	success:function(data){    
+    		var result = eval('(' + data + ')');
+    	    if(result.success) $.messager.alert({
+    	    		title:"上传成功",
+    	    		msg:"上传成功!",
+    	    	icon:'info',		
+    	    });
+    	},error:function(date){
+    	    $.messager.alert(data.errormsg);
+    	}  
+    	});    
+    	$('#upload').submit();
+    }
+</script>
+
+</head>
+<body>
+    <div style="margin:20px 0;"> 
+        <div class="easyui-panel" title="账号认证" style="width:400px;padding:30px 70px 50px 70px">
+            <form id="upload" action="file/upload.do" method="post" enctype="multipart/form-data">
+            <div style="margin-bottom:20px">
+                <input class="easyui-filebox"  data-options="prompt:'上传手持身份证正面照'" name="file" style="width:220px;height:30px"/>
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-linkbutton" type=button onclick="upload()" value="上传" style="width:220px;height:30px"/>
+            </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

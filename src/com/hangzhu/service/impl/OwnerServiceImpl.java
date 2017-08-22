@@ -48,4 +48,10 @@ public class OwnerServiceImpl implements OwnerService
 		return true;
 	}
 
+	@Override
+	public int getCount()
+	{
+		return osm.getCount();
+	}
+
 }

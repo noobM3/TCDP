@@ -45,28 +45,28 @@ table.altrowstable td {
 
 </head>
 <body bgcolor="#F0F8FF">
-        <table class="altrowstable" id="alternatecolor">
+        <table class="altrowstable" id="alternatecolor" style="width:200px;height:200px;font-size:12px;">
             <tr>
                 <td>账号</td>
-                <td>：${owner.ono}</td>
+                <td>${owner.ono}</td>
             </tr>
             <tr>
                 <td>用户</td>
-                <td>：${owner.oname}</td>
+                <td>${owner.oname}</td>
             </tr>
             <tr>
                 <td>性别</td>
-                <td>：${owner.sex}</td>
+                <td>${owner.sex}</td>
             </tr>
             <tr>
                 <td>电话</td>
-                <td>：${owner.phone}</td>
+                <td>${owner.phone}</td>
             </tr>
             <tr>
                 <td>认证状态</td>
                 <td>
-                    <c:if test="${owner.cer == '0'}">：未认证</c:if > 
-                    <c:if test="${owner.cer == '1'}">：已认证</c:if > 
+                    <c:if test="${owner.cer == '0'}">未认证</c:if > 
+                    <c:if test="${owner.cer == '1'}">已认证</c:if > 
                 </td>
             </tr>
         </table>

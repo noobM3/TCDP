@@ -11,4 +11,6 @@ public interface LogisticsService
 	public void updateLogisticsEmail(String lno,String n_email);	
 	
 	public void updateLogisticsAddress(String lno,String n_address);
+	
+	public int getCount();
 }

@@ -105,7 +105,15 @@
 			}
 			function removeUser() {
 				var row = $('#dg').datagrid('getSelected');
-				
+				if(row.end_time == null)
+				{
+					/* $.messager.show({ // show error message
+                        title : 'Error',
+                        msg : "该订单无法删除！"
+                    }); */
+                    $.messager.alert("错误","订单尚未完成，无法被删除！","error");
+					return;
+				}
 				if (row) {
 					$.messager.confirm('确认',
 							'确定要删除该订单?删除后无法恢复！',
@@ -132,13 +140,57 @@
 
 			function order1()
 			{
-			    var map1=
-			        $.get("cargo/getcargo1.do?ono="+user.ono,function getuser(data)
+			    $.ajax({
+			        url  : "transport/getundo.do",
+			        async: false,
+			        data : {ono:user.ono},
+			        success:function(result)
 			        {
-			            map1=data;
-			        });
-			    document.write(map1["total"]);
+			        	document.write(result.total);
+			        }
+			    });
 			}
+			
+	         function order2()
+	            {
+	                $.ajax({
+	                    url  : "cargo/getcargo1.do",
+	                    async: false,
+	                    data : {ono:user.ono},
+	                    success:function(result)
+	                    {
+	                        document.write(result.total);
+	                    }
+	                });
+	            }
+	         
+	         function owner()
+	         {
+	        	 $.ajax({
+                     url  : "owner/count.do",
+                     async: false,
+                     dataType: "json",
+                     success:function(result)
+                     {
+                    	 //var json = eval("(" + result + ")");
+                         document.write(result.count);
+                     }
+                 });
+	         }
+	         
+	         function logistics()
+	         {
+	              $.ajax({
+	                     url  : "logistics/count.do",
+	                     async: false,
+	                     dataType: "json",
+	                     success:function(result)
+	                     {
+	                         //var json = eval("(" + result + ")");
+	                         document.write(result.count);
+	                     }
+	                 });
+	         }
 		</script>
 </head>
 <body class="easyui-layout" style="margin:0 1px;background-color:#f5f5f5 !important;" onload="updatedg()">  
@@ -166,14 +218,14 @@
             <div title="订单管理" data-options="iconCls:'icon-shezhi',selected:true" style="overflow:auto;padding:10px;background-color:#F0F8FF">
                 <ul id="tt" class="easyui-tree" data-options="animate:true,lines:true">  
                             <li>  
-                                <span><a href="#" onclick="addTab('异常订单','index.html')">异常订单</a></span>  
-                            </li>    
-                            <li>  
 								<span><a href="#" onclick="addTab('未完成订单','undonetransport.html')">未完成订单</a></span>  
                             </li>
                             <li>  
 								<span><a href="#" onclick="addTab('已完成订单','completedtransport.html')">已完成订单</a></span>  
-                            </li>                                                           
+                            </li>  
+                            <li>  
+                                <span><a href="#" onclick="addTab('订单备份与恢复','transportdata.html')">订单备份与恢复</a></span>  
+                            </li>                                                            
                 </ul>
             </div>
             <div title="货物管理" data-options="iconCls:'icon-guanli'" style="padding:10px;background-color:#F0F8FF">
@@ -213,7 +265,7 @@
                         <span><a href="#" onclick="addTab('密码修改','changepw.html')">密码修改</a></span>  
                     </li>  
                     <li>  
-                        <span><a href="#" onclick="addTab('账号认证','index.html')">账号认证</a></span>  
+                        <span><a href="#" onclick="addTab('账号认证','certification.html')">账号认证</a></span>  
                     </li>                                                           
                 </ul>  
             </div>
@@ -241,13 +293,13 @@
 							</div>
 							<div data-options="region:'center',border:false" style="padding-left:30px;">
 								<div class="jiankong" data-options="region:'center',border:false">
-									<div class="juxing"><a href="#">未完订单 <span><script>order1()</script></span> 个</a></div>
+									<div class="juxing"><a href="#" onclick="addTab('未完成订单','undonetransport.html')">未完成订单 <span><script>order1()</script></span> 个</a></div>
 								</div>
 								<div class="jiankong" data-options="region:'center',border:false">
-									<div class="juxing"><a href="#">完成订单 <span><script>order2()</script></span> 个</a></div>
+									<div class="juxing"><a href="#" onclick="addTab('货物--待承运','getcargo1.html')">待承运货物 <span><script>order2()</script></span> 个</a></div>
 								</div>
 								<div class="jiankong" data-options="region:'center',border:false">
-									<div class="juxing"><a href="#">货主 <span><script>owner()</script></span> 个</a></div>
+									<div class="juxing"><a href="#">平台货主 <span><script>owner()</script></span> 个</a></div>
 								</div>
 								<div class="jiankong" data-options="region:'center',border:false">
 									<div class="juxing"><a href="#">物流公司 <span><script>logistics()</script></span> 个</a></div>
@@ -262,7 +314,7 @@
 							<!---获取数据--->
 							<thead>
 								<tr>
-									<th field="ck" checkbox="true"></th>
+									<!-- <th field="ck" checkbox="true"></th> -->
 									<th data-options="field:'trackingno',width:80">物流单号</th>
 									<th data-options="field:'lname',width:100">物流公司</th>
 									<!-- <th data-options="field:'ono',width:100">货主编号</th> -->
@@ -277,7 +329,7 @@
 							<div id="toolbar">
 <!-- 								<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新 增</a>
 								<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编 辑</a> -->
-								<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeUser()">移 除</a>
+								<!-- <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeUser()">移 除</a>
 
 								<a href="#" class="easyui-linkbutton" plain="true">
 									<span>丨选择模式: </span>
@@ -285,12 +337,12 @@
 										<option value="1">单选</option>
 										<option value="0">全选</option>
 									</select>
-								</a>
-								<a href="#" class="easyui-linkbutton" plain="true">
+								</a> -->
+								<!-- <a href="#" class="easyui-linkbutton" plain="true">
 								    <span>丨数据操作: </span>
 								</a>
 								<a href="#" class="easyui-linkbutton" iconCls="icon-backup" plain="true" onclick="backupTransport()">备 份</a>
-                                <a href="#" class="easyui-linkbutton" iconCls="icon-reduction" plain="true" onclick="reduceTransport()">还 原</a>
+                                <a href="#" class="easyui-linkbutton" iconCls="icon-reduction" plain="true" onclick="reduceTransport()">还 原</a> -->
 								
 								<!-- <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addTab('新增用户','add.html')">新增</a>
 								<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="addTab('编辑用户','edit.html')">编辑</a> -->
@@ -335,7 +387,7 @@
 
 function backupTransport()
 {
-    
+	//$.get("transport/backup.do?ono="+user.ono);
 }
 
 function addTab(title, url){

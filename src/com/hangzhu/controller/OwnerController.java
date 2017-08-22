@@ -40,7 +40,7 @@ public class OwnerController
 	 * 
 	 * @param owner
 	 * @return
-	 * @description:检测是否有符合条件的货主
+	 * @description:检测是否有符合条件的货主--角色判断
 	 */
 	@RequestMapping("getowner.do")
 	@ResponseBody
@@ -99,7 +99,7 @@ public class OwnerController
 		return "Success!";
 	}
 	
-    @RequestMapping("/logoff.do")
+    @RequestMapping("logoff.do")
     public void logoff(HttpSession session,HttpServletResponse response)
     {
         session.invalidate();
@@ -112,10 +112,22 @@ public class OwnerController
 		}
     }
     
-    @RequestMapping("/info.do")
+    @RequestMapping("info.do")
     public String getUserInfo()
     {
     	return "ownerinfo";
     }
 	
+    /**
+     * 
+     * @return
+     * @description:获取当前平台货主总数
+     */
+    @RequestMapping("count.do")
+    @ResponseBody
+    public String getCount()
+    {
+    	int count = os.getCount();
+    	return "{\"count\":\"" + count + "\"}";
+    }
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>备份恢复</title>
+
+<!-- 引入JQuery -->
+<script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+<!-- 引入EasyUI -->
+<script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+<!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+<script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<!-- 引入EasyUI的样式文件-->
+<link rel="stylesheet" href="jquery-easyui/themes/default/easyui.css" type="text/css"/>
+<!-- 引入EasyUI的图标样式文件-->
+<link rel="stylesheet" href="jquery-easyui/themes/icon.css" type="text/css"/>
+
+</head>
+<body bgcolor="#F0F8FF">
+        
+        <div style="padding:5px;text-align:center;position:relative;top:200px">
+            <a href="#" class="easyui-linkbutton" icon="icon-data1" onclick="backupTransport()">订单备份</a>
+            <a href="#" class="easyui-linkbutton" icon="icon-data2" onclick="reduceTransport()">订单恢复</a>
+        </div>
+
+    
+    <script type="text/javascript">
+    
+    var user=
+        $.get("owner/getsession.do",function getuser(data)
+        {
+            user=data;
+        });
+    
+    function backupTransport()
+    {
+    	$.get("transport/backup.do?ono="+user.ono);
+    }
+    
+    function reduceTransport()
+    {
+    	$.get("transport/reduce.do?ono="+user.ono);
+    }
+    
+    
+    </script>   
+</body>
+</html>     
+        
+        

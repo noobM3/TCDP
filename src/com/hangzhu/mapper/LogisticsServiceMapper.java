@@ -10,28 +10,30 @@ public interface LogisticsServiceMapper
 	 * 
 	 * @param lname
 	 * @return Logistics
-	 * @description:»ñÈ¡Ö¸¶¨ÎïÁ÷¹«Ë¾ÏêÇé
+	 * @description:ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½
 	 */
 	public Logistics display(String lname);
 	
 	/**
 	 * 
 	 * @param lno
-	 * @description:ÐÞ¸Ä¹«Ë¾ÁªÏµµç»°
+	 * @description:ï¿½Þ¸Ä¹ï¿½Ë¾ï¿½ï¿½Ïµï¿½ç»°
 	 */
 	public void updateLogisticsPhone(@Param("lno")String lno,@Param("n_phone")String n_phone);
 	
 	/**
 	 * 
 	 * @param lno
-	 * @description:ÐÞ¸Ä¹«Ë¾µç×ÓÓÊÏäµØÖ·
+	 * @description:ï¿½Þ¸Ä¹ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
 	 */
 	public void updateLogisticsEmail(@Param("lno")String lno,@Param("n_email")String n_email);	
 	
 	/**
 	 * 
 	 * @param lno
-	 * @description:ÐÞ¸Ä¹«Ë¾µØÖ·
+	 * @description:ï¿½Þ¸Ä¹ï¿½Ë¾ï¿½ï¿½Ö·
 	 */
 	public void updateLogisticsAddress(@Param("lno")String lno,@Param("n_address")String n_address);
+	
+	public int getCount();
 }
