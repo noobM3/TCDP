@@ -34,6 +34,12 @@ public class OwnerServiceImpl implements OwnerService
 	{
 		return osm.checkOwner(ono, password);
 	}
+	
+	@Override
+	public String checkOno(String ono)
+	{
+		return osm.checkOno(ono);
+	}
 
 	@Override
 	public void updatePw(String ono, String n_pw)
@@ -52,6 +58,19 @@ public class OwnerServiceImpl implements OwnerService
 	public int getCount()
 	{
 		return osm.getCount();
+	}
+
+	@Override
+	public int getCer(String ono)
+	{
+		if(osm.getCer(ono) == null) return 0;
+		return (int)osm.getCer(ono);
+	}
+
+	@Override
+	public void updateCer(String ono)
+	{
+		osm.updateCer(ono);
 	}
 
 }

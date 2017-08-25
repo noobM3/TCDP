@@ -16,29 +16,80 @@
 <link rel="stylesheet" href="jquery-easyui/themes/icon.css" type="text/css"/>
 
 <script type="text/javascript">
+
+    var user;
+    $.ajax({
+        url  : "owner/getsession.do",
+        async: false,
+        success:function(result)
+        {
+        	user = result;
+        }
+    }); 
+    
+    function start()
+    {
+        
+         $.ajax({
+            url  : "owner/cerState.do",
+            async: false,
+            data : {ono:user.ono},
+            dataType : "json",
+            success:function(result)
+            {
+                replace(result.cer);
+            }
+        }); 
+    }
+    
+    function replace(value)
+    {
+    	if(value == "1")
+    	{
+    	    document.getElementById("cer").innerHTML="<table style=\"font-size:20px\"><tr><td>认证状态</td><td>：<span style=\"color:red\">认证中</span></td></tr></table>";    	
+    	}
+        if(value == "2")
+        {
+            document.getElementById("cer").innerHTML="<table style=\"font-size:20px\"><tr><td>认证状态</td><td>：<span style=\"color:red\">已认证</span></td></tr></table>";      
+        }
+    }
+    
     function upload()
     {
     	$('#upload').form({
     	url:'file/upload.do',    
     	success:function(data){    
     		var result = eval('(' + data + ')');
-    	    if(result.success) $.messager.alert({
+    	    if(result.success) 
+    	    {
+    	    	$.messager.alert({
     	    		title:"上传成功",
     	    		msg:"上传成功!",
-    	    	icon:'info',		
-    	    });
+    	    	    icon:'info',		
+    	    	    });
+    	    	//更新认证状态
+    	         $.ajax({
+    	             url  : "owner/updatecer.do",
+    	             async: false,
+    	             data : {ono:user.ono},
+    	         }); 
+    	    	//div替换
+    	    	start();
+    	    }
+    	    
     	},error:function(date){
     	    $.messager.alert(data.errormsg);
     	}  
-    	});    
+    	});
     	$('#upload').submit();
+    	
     }
 </script>
 
 </head>
-<body>
-    <div style="margin:20px 0;"> 
-        <div class="easyui-panel" title="账号认证" style="width:400px;padding:30px 70px 50px 70px">
+<body onload="start()">
+    <div  style="margin:20px 0;"> 
+        <div id="cer" class="easyui-panel" title="账号认证" style="width:400px;padding:30px 70px 50px 70px">
             <form id="upload" action="file/upload.do" method="post" enctype="multipart/form-data">
             <div style="margin-bottom:20px">
                 <input class="easyui-filebox"  data-options="prompt:'上传手持身份证正面照'" name="file" style="width:220px;height:30px"/>

@@ -2,86 +2,89 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>账号注册</title>
+<title>注册</title>
 
-<!-- 引入JQuery -->
-<script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
-<!-- 引入EasyUI -->
-<script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
-<!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
-<script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
-<!-- 引入EasyUI的样式文件-->
-<link rel="stylesheet" href="jquery-easyui/themes/default/easyui.css" type="text/css"/>
-<!-- 引入EasyUI的图标样式文件-->
-<link rel="stylesheet" href="jquery-easyui/themes/icon.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/color.css">
+    <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/easyloader.js"></script>
+    <script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_self">
 
 </head>
-<body>
-
-	<form action="owner/register.do" method="post" onsubmit="return checkForm()">
-		<table border="1">
-			<tr>
-				<td>账号</td>
-				<td>：<input type="text" id="ono" name="ono" value="注意！账号确定后无法改变!" onfocus="value=''"/></td>
-			</tr>
-			<tr>
-			    <td>姓名</td>
-			    <td>：<input type="text" id="oname" name="oname" /></td>
-			</tr>
-			<tr>
-			    <td>密码</td>
-			    <td>：<input type="password" id="pw1" name="password" /></td>
-			</tr>
-			<tr>
-                <td>再次确认</td>
-                <td>：<input type="password" id="pw2" name="password1" onblur="check()"/></td>
-            </tr>
-			<tr>
-                <td>性别</td>
-                <td>：<input type="text" id="sex" name="sex" /></td>
-            </tr>
-            <tr>
-                <td>联系电话</td>
-                <td>：<input type="text" id="phone" name="phone" /></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" value="注册" ></td>
-            </tr>
-		</table>
-	</form>
-
-	<script type="text/javascript">
-	   function check()
-	   {
-		   var pw1 = document.getElementById("pw1").value;
-		   var pw2 = document.getElementById("pw2").value;
-		   if(pw1 != pw2)
-		   {
-			   alert("两次密码不一致！请重新输入");
-			   document.getElementById("pw1").value="";
-			   document.getElementById("pw2").value="";
-			   return false;
-		   }
-		   return true;
-	   }
-	   
-	   function checkForm()
-	   {
-		   var ono = document.getElementById("ono").value;
-		   var pw1 = document.getElementById("pw1").value;
-		   var pw2 = document.getElementById("pw2").value;
-		   var oname = document.getElementById("oname").value;
-		   var sex = document.getElementById("sex").value;
-		   var phone = document.getElementById("phone").value;
-		   if(ono==null || ono=="注意！编号确定后无法改变!" || oname==null ||
-				   pw1==null || pw2==null || sex ==null || phone==null)
-		   {
-			   alert("请填写完整！");
-			   return false;
-		   }
-		   return true;
-	   }
-	   
-	</script>
+<body class="gray-bg">
+    <div style="margin:20px 0;"></div>
+    <div  style="margin: 0 auto;width:400px;padding:30px 60px">
+    <form id="register" action="owner/register.do" method="post">
+        <div style="margin-bottom:20px">
+            <h3>快速注册一个新账号</h3>
+        </div>
+        <div style="margin-bottom:20px">
+            <div>用户名:</div>
+            <input id="ono" class="easyui-textbox" name="ono" required="true" data-options="prompt:'请输入邮箱作为用户名...',validType:'email'" style="width:100%;height:32px">
+        </div>
+        <div style="margin-bottom:20px">
+            <div>密码:</div>
+            <input id="pw1" name="password" required="true" class="easyui-textbox"  type="password" validType="length[6,32]"  style="width:100%;height:32px">
+        </div>
+        <div style="margin-bottom:20px">
+            <div>确认密码:</div>
+            <input class="easyui-textbox"  required="true" type="password" validType="equalTo['#pw1']" style="width:100%;height:32px">
+        </div>
+        
+    </form>
+        <div>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="submitform()" style="width:100%;height:32px">注册</a>
+        </div>
+    </div>
 </body>
+<script type="text/javascript">
+$.extend($.fn.validatebox.defaults.rules, {    
+    /* 必须和某个字段相等 */  
+    equalTo: {  
+        validator:function(value,param){  
+            return $(param[0]).val() == value;  
+        },  
+        message:'字段不匹配'  
+    }  
+             
+}); 
+
+
+function submitform()
+{
+	if($("#register").form('enableValidation').form('validate') )
+	{
+	    $.ajax({
+	        url  : "owner/checkono.do",
+	        async: true,
+	        data : {ono:$("#ono").val()},
+	        dataType:"json",
+	        success:function(result)
+	        {
+	            if(result.success) 
+	            {
+	            	document.getElementById("register").submit();
+	            } 
+	            if(result.fail)
+	            {
+	            	alert("该用户名已存在！")
+	            }
+	        }
+	    }); 
+	}
+	else
+		alert("请正确填写！");
+}
+
+</script>
+
+
 </html>

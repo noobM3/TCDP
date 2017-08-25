@@ -39,6 +39,14 @@ public interface OwnerService
 	/**
 	 * 
 	 * @param ono
+	 * @return
+	 * @description:检测用户编号是否被使用
+	 */
+	public String checkOno(String ono);
+	
+	/**
+	 * 
+	 * @param ono
 	 * @param oname
 	 * @return
 	 * @description:检测是否存在该货主
@@ -51,4 +59,19 @@ public interface OwnerService
 	 * @description:获取货主数
 	 */
 	public int getCount();
+	
+	/**
+	 * 
+	 * @param ono
+	 * @return
+	 * @description:获取货主的认证状态
+	 */
+	public int getCer(String ono);
+	
+	/**
+	 * 
+	 * @param ono
+	 * @description:更新货主的认证状态
+	 */
+	public void updateCer(String ono);
 }

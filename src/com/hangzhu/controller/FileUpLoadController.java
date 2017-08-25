@@ -39,24 +39,22 @@ public class FileUpLoadController {
 		
 		SimpleDateFormat  stFormat1=new SimpleDateFormat("yyyy");
 		String year=stFormat1.format(new Date());
-		//URL是文件的相对路径
+		//URL是文件的相对路径-- upload/2017/
 		url+=year+File.separator;
-		//path是文件的绝对路径
+		//path是文件的绝对路径-- D:/ ./TCDP/...../upload/2017/
 		path+=File.separator+year;
 		//判别文件夹是否存在，若不存在则创建该文件夹
 		File file2=new File(path);
 		if(!file2.exists())
 			file2.mkdirs();
 		
-		
-
 		//得到上传的文件名
 		String fileName = file.getOriginalFilename();
 		System.out.println("fileName:" + fileName);
-		//得到文件后缀名
+		//得到文件后缀名--时间戳.后缀名
         newfileName+=fileName.substring(fileName.lastIndexOf("."), fileName.length());
         System.out.println("newfileName:" + newfileName);
-		url+=newfileName;
+		url+=newfileName;//  upload/2017/时间戳.后缀名
 		
 		File targetFile = new File(path, newfileName);
 	
@@ -70,9 +68,8 @@ public class FileUpLoadController {
 	
 		//String url = request.getContextPath() + "/upload/" + newfileName;
           
-		model.addAttribute("url", url);
-		model.addAttribute("filename", fileName);
-		
+		//model.addAttribute("url", url);
+		//model.addAttribute("filename", fileName);
 		return "{\"success\":true}";
 	}
   

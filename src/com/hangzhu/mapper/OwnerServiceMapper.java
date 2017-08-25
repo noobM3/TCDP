@@ -8,6 +8,8 @@ public interface OwnerServiceMapper
 {
 	public Owner checkOwner(@Param("ono")String ono,@Param("password")String password);
 	
+	public String checkOno(String ono);
+	
 	public void addOwner(Owner owner);
 	
 	public void updatePhone(@Param("ono")String ono,@Param("n_phone")String n_phone);
@@ -17,4 +19,8 @@ public interface OwnerServiceMapper
 	public Owner getOwner(@Param("ono")String ono,@Param("oname")String oname);
 	
 	public int getCount();
+	
+	public Object getCer(String ono);
+	
+	public void updateCer(String ono);
 }

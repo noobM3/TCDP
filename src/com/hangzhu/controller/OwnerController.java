@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hangzhu.po.Owner;
 import com.hangzhu.service.OwnerService;
 
+import sun.tools.jar.resources.jar;
+
 @Controller
 @RequestMapping("/owner/")
 public class OwnerController
@@ -53,14 +55,28 @@ public class OwnerController
 	}
 	
 	@RequestMapping(value="register.do",method = RequestMethod.POST)
-	public String register(Owner owner,Model model)
+	public void register(Owner owner,HttpServletRequest request,HttpServletResponse response)
 	{
-//		System.out.println(owner);
+		//System.out.println(owner);
 		os.addOwner(owner);
-		model.addAttribute("owner", owner);
-		return "ownerinfo";
+		session = request.getSession();
+		session.setAttribute("owner", owner);
+		try
+		{
+			response.sendRedirect("../platform.html");
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
+	/**
+	 * 
+	 * @param owner
+	 * @param request
+	 * @param response
+	 * @description:登录
+	 */
 	@RequestMapping(value="login.do")
 	public void login(Owner owner,HttpServletRequest request,HttpServletResponse response)
 	{
@@ -105,7 +121,7 @@ public class OwnerController
         session.invalidate();
         try
 		{
-			response.sendRedirect("../index.html");
+			response.sendRedirect("../login.html");
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -130,4 +146,43 @@ public class OwnerController
     	int count = os.getCount();
     	return "{\"count\":\"" + count + "\"}";
     }
+    
+    /**
+     * 
+     * @param ono
+     * @return
+     * @description:获取货主认证状态
+     */
+    @RequestMapping("cerState.do")
+    @ResponseBody
+    public String getCerState(String ono)
+    {
+    	int cer = os.getCer(ono);
+    	if(cer == 0) return "{\"cer\":\"" + cer + "\"}"; //未认证
+    	if(cer == 1) return "{\"cer\":\"" + cer + "\"}"; //认证中
+    	return "{\"cer\":\"" + cer + "\"}";                //已认证
+    }
+    
+    @RequestMapping("updatecer.do")
+    @ResponseBody
+    public String updateCer(String ono)
+    {
+    	os.updateCer(ono);
+    	return "{\"success\":true}";
+    }
+    
+    /**
+     * 
+     * @param ono
+     * @return JSON
+     * @description:检测用户编号是否已被使用
+     */
+    @RequestMapping("checkono.do")
+    @ResponseBody
+    public String checkOno(String ono)
+    {
+    	if(os.checkOno(ono) == null) return "{\"success\":true}";
+    	return "{\"fail\":true}";
+    }
+    
 }

@@ -39,7 +39,14 @@ public class LoginFilter implements Filter {
 		
 		HttpSession session = ((HttpServletRequest)request).getSession();
 		String url = ((HttpServletRequest)request).getRequestURL().toString();
-		if( url.contains("index.html") ||url.contains("register1.html") || url.contains("login.do") || url.contains("getsession.do") || url.contains("register.do") || url.contains("logff.do"))//不过滤
+		if( url.contains("index.html") ||url.contains("login.html") ||
+				url.contains("register.html") || url.contains("register1.html")||
+				url.contains("login.do") || url.contains("getsession.do") || 
+				url.contains("register.do") || url.contains("logff.do") ||
+				url.contains(".js") || url.contains(".css") || url.contains(".svg")
+				|| url.contains(".png") || url.contains(".gif") || url.contains("checkono") ||
+				url.contains("index1.html")
+				)//不过滤
 		{
 			chain.doFilter(request, response);
 			return;
@@ -48,7 +55,7 @@ public class LoginFilter implements Filter {
 		{
 			if(session.getAttribute("owner") == null || session.getAttribute("owner") == "")//未登录
 			{
-				((HttpServletResponse)response).sendRedirect("index.html");
+				((HttpServletResponse)response).sendRedirect("login.html");
 				return;
 			}
 		}

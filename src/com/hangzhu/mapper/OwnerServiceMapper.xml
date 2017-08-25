@@ -15,17 +15,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="checkOwner" resultMap="ownerMap">
 	   select * from owner where ono=#{ono} and password=#{password}
 	</select>
+	
+    <select id="checkOno"  parameterType="String" resultType="String">
+       select ono from owner where ono=#{ono}
+    </select>
 
 	<insert id="addOwner" parameterType="Owner">
-		insert into Owner values(#{ono},#{oname},#{sex},#{phone},#{password},#{cer})
+		insert into owner values(#{ono},#{oname},#{sex},#{phone},#{password},#{cer})
 	</insert>
 
 	<update id="updatePhone">
-		update Owner set phone=#{n_phone} where ono=#{ono}
+		update owner set phone=#{n_phone} where ono=#{ono}
 	</update>
     
     <update id="updatePw">
-        update Owner set password=#{n_pw} where ono=#{ono}
+        update owner set password=#{n_pw} where ono=#{ono}
     </update>
     
     <select id="getOwner" resultMap="ownerMap">
@@ -35,4 +39,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getCount" resultType="int">
        select count(*) from owner
     </select>
+    
+    <select id="getCer"  parameterType="String" resultType="int">
+       select cer from owner where ono=#{ono}
+    </select>
+    
+    <update id="updateCer"  parameterType="String">
+       update owner set cer= (case when cer=0 then 1 else 2 end) where ono=#{ono};
+    </update>
 </mapper>

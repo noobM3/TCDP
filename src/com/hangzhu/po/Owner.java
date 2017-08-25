@@ -1,15 +1,13 @@
 package com.hangzhu.po;
 
-import java.util.List;
-
 public class Owner
 {
-	private String	ono;		// �������
-	private String	oname;		// ��������
-	private String	sex;		// �Ա�
-	private String	phone;		// �绰
-	private String	password;	// ����
-	private int		cer;		// ��֤״̬--0��δ��֤ 1������֤
+	private String	ono;		// 编号
+	private String	oname;		// 姓名
+	private String	sex;		// 性别
+	private String	phone;		// 电话
+	private String	password;	// 密码
+	private int		cer;		// 0：未认证  1：认证中 2：已认证
 	
 	public Owner()
 	{
@@ -18,7 +16,6 @@ public class Owner
 
 	public Owner(String ono, String oname, String sex, String phone, String password, int cer)
 	{
-		super();
 		this.ono = ono;
 		this.oname = oname;
 		this.sex = sex;
